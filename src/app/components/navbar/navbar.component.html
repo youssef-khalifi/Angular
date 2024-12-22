@@ -1,0 +1,31 @@
+<div [class.toggled]="isToggled" id="wrapper" class="wrapper-content">
+  <div id="sidebar-wrapper">
+    <ul class="sidebar-nav">
+      <li class="sidebar-brand">
+        <a href="#">Bootdey.com</a>
+      </li>
+      <li><a [routerLink]="['/home']" class="bi bi-house-door-fill">Home</a></li>
+      <li><a [routerLink]="['/home/course']" class="bi bi-journal-text">Course</a></li>
+      <li><a [routerLink]="['/home/profile']" class="bi bi-person-circle">Profile</a></li>
+      <li><a href="#">Events</a></li>
+      <li class="active"><a href="#">About</a></li>
+      <li><a href="#">Services</a></li>
+      <li><a href="#">Contact</a></li>
+    </ul>
+  </div>
+
+  <div id="page-content-wrapper">
+    <nav class="navbar navbar-default">
+      <div class="container-fluid">
+        <div class="navbar-header">
+          <button
+            class="btn-menu btn btn-success btn-toggle-menu"
+            (click)="toggleSidebar()"
+          >
+            <i class="bi bi-layout-text-sidebar"></i>
+          </button>
+        </div>
+      </div>
+    </nav>
+   </div>
+</div>

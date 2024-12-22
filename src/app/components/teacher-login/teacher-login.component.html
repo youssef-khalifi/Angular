@@ -1,0 +1,19 @@
+<div class="body">
+
+  <div class="main">
+    <input type="checkbox" id="chk" aria-hidden="true">
+
+    <div class="signup">
+      <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+        <label for="chk" aria-hidden="true"> Teacher Login</label>
+        <input type="email" name="username" formControlName="username" placeholder="Email" required="">
+        <input type="password" name="password" formControlName="password" placeholder="Password" required="">
+
+        <button >Login</button>
+        <button (click)="navigateToStudentLogin()">Student Login</button>
+      </form>
+    </div>
+  </div>
+
+</div>
+
