@@ -8,14 +8,18 @@ import {TeacherLoginComponent} from "./components/teacher-login/teacher-login.co
 import {ProfileComponent} from "./components/profile/profile.component";
 import {CourseComponent} from "./components/course/course.component";
 import {CourseDetailsComponent} from "./components/course-details/course-details.component";
+import {ManageComponent} from "./components/manage/manage.component";
 import {VideosComponent} from "./components/videos/videos.component";
-import {LessonsComponent} from "./components/lessons/lessons.component";
+import {AboutComponent} from "./components/about/about.component";
 
 const routes: Routes = [
   { path: 'home', component: HomeComponent, canActivate: [authGuard], children:
       [
+        { path: 'local', component : AboutComponent },
         { path: 'course', component : CourseComponent },
         { path: 'profile', component : ProfileComponent },
+        { path: 'manage', component : ManageComponent },
+        { path: 'resources/:name', component : VideosComponent },
         {path: 'course-details/:name', component: CourseDetailsComponent},
       ],
   },

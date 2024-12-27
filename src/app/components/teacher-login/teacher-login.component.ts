@@ -46,7 +46,7 @@ export class TeacherLoginComponent implements OnInit {
 
         this.toast.success("welcome" , "Success" , 3000)
         setTimeout(() => {
-          this.router.navigate(['/home']);
+          this.router.navigate(['/home/local']);
         }, 1500);
       },
       error: (error) => {

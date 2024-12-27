@@ -1,1 +1,119 @@
-<p>videos works!</p>
+<div class="container">
+  <div class="row gutters">
+    <div class="col-xl-3 col-lg-3 col-md-12 col-sm-12 col-12">
+      <div class="card h-100">
+        <div class="card-body">
+          <div class="account-settings">
+            <div class="user-profile">
+              <div class="user-avatar">
+                <img [src]="'data:image/png;base64,'+course?.image" alt="Maxwell Admin">
+              </div>
+              <h5 class="user-name">{{course?.name}}</h5>
+              <h6 class="user-email">{{course?.courType}}</h6>
+            </div>
+            <div class="about">
+              <h5>About</h5>
+              <p>{{course?.description}}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="col-xl-9 col-lg-9 col-md-12 col-sm-12 col-12">
+      <div class="card h-100">
+        <div class="card-body">
+
+          <form [formGroup]="videoForm" (ngSubmit)="saveVideo()" >
+          <div class="row gutters">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+              <h6 class="mb-2 text-primary">Video Information</h6>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label for="title">Title</label>
+                <input type="text" class="form-control" formControlName="title" id="title" placeholder="Enter Title">
+              </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label for="tags">Tags</label>
+                <input type="text" class="form-control" formControlName="tags" id="tags" placeholder="Enter Tags">
+              </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label for="videoName">Video Name</label>
+                <input type="text" class="form-control" formControlName="videoName" id="videoName" placeholder="Enter Video Name">
+              </div>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label for="description">Description</label>
+                <textarea type="text" class="form-control" formControlName="description" id="description" placeholder="Enter Description"></textarea>
+              </div>
+            </div>
+            <div class="col-sm-9 text-secondary">
+              <button type="submit" [disabled]="videoForm.invalid" class="btn btn-primary px-4" >Save Changes</button>
+            </div>
+          </div>
+          </form>
+          <form [formGroup]="uploadForm" (ngSubmit)="uploadVideo()" *ngIf="!visible">
+          <div class="row gutters">
+            <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+              <h6 class="mt-3 mb-2 text-primary">Upload the Video</h6>
+            </div>
+            <div class="col-xl-6 col-lg-6 col-md-6 col-sm-6 col-12">
+              <div class="form-group">
+                <label for="video">Video</label>
+                <input type="file" (change)="onFileSelected($event)"  class="form-control" id="video" placeholder="upload video">
+              </div>
+            </div>
+          </div>
+            <br>
+            <div class="row gutters">
+              <div class="col-xl-12 col-lg-12 col-md-12 col-sm-12 col-12">
+                <div class="text-right">
+                  <button type="submit" name="submit" class="btn btn-primary">Upload</button>
+                </div>
+              </div>
+            </div>
+          </form>
+
+        </div>
+
+
+
+
+
+      </div>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="row">
+      <div class="col-12">
+        <table class="table table-bordered">
+          <thead>
+          <tr>
+            <th scope="col">Course</th>
+            <th scope="col">Title</th>
+            <th scope="col">Tags</th>
+            <th scope="col">Actions</th>
+          </tr>
+          </thead>
+          <tbody *ngFor="let video of videos">
+
+          <tr>
+            <th scope="row">{{video.course?.name}}</th>
+            <td>{{video.title}}</td>
+            <td>{{ video.tags }}</td>
+            <td>
+              <button type="button" (click)="deleteVideo(video)" class="btn btn-primary"><i class="bi bi-trash3-fill"></i></button>
+            </td>
+          </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </div>
+</div>

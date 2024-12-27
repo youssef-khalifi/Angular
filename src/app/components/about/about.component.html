@@ -1,0 +1,34 @@
+
+<body>
+<div class="container">
+  <header class="header">
+    <div class="profile-image">
+      <span><img class="profile-image" [src]="'data:image/png;base64,'+user?.image"></span>
+    </div>
+    <div class="profile-info">
+      <h1>Welcome back, {{ user?.fullName }}</h1>
+      <p>
+        {{ user?.jobTitle }}
+      </p>
+    </div>
+  </header>
+
+  <div class="banner">
+    <div class="banner-content">
+      <h2>Welcome to EduConnect!</h2>
+      <p>
+
+        Your learning journey starts here.
+        Whether you're looking to enhance your skills,
+        explore new subjects, or connect with experts,
+        EduConnect is here to guide you every step of the way.
+        Dive into a world of knowledge and unlock your potential.
+        Let’s learn, grow, and achieve together!</p>
+    </div>
+    <div class="banner-image">
+      <img src="assets/images/welcome.jpg" alt="Woman smiling">
+    </div>
+  </div>
+
+
+</div>

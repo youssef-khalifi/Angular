@@ -3,6 +3,9 @@ import {TeacherService} from "../../services/teacher.service";
 import {Teacher} from "../../models/Teacher";
 import {AuthService} from "../../services/auth.service";
 import {FormBuilder, FormGroup, Validators} from "@angular/forms";
+import {Student} from "../../models/Student";
+import {StudentService} from "../../services/student.service";
+import {NgToastService} from "ng-angular-popup";
 
 @Component({
   selector: 'app-profile',
@@ -11,20 +14,23 @@ import {FormBuilder, FormGroup, Validators} from "@angular/forms";
 })
 export class ProfileComponent implements OnInit{
 
-  teacher : Teacher | undefined;
+  teacher : Teacher | Student | undefined;
   teacherForm!: FormGroup;
   selectedImage: File | null = null;
 
 
-  constructor(private service : TeacherService,private fb: FormBuilder,
-              private authService : AuthService) {
+  constructor(private service : TeacherService,private fb: FormBuilder, private toast: NgToastService,
+              public authService : AuthService, private studentService : StudentService) {
   }
 
     ngOnInit(): void {
 
     if (this.authService.authenticatedUser.userType.includes("Teacher")){
       this.getTeacher()
+    }else {
+      this.getStudent()
     }
+
       this.teacherForm = this.fb.group({
         fullName: ['', [Validators.required, Validators.minLength(3)]],
         phoneNumber: ['', [Validators.required, Validators.pattern('^[0-9]{10,15}$')]],
@@ -38,6 +44,18 @@ export class ProfileComponent implements OnInit{
 
   getTeacher(): void {
     this.service.getStudent().subscribe({
+      next: (data: Teacher) => {
+        console.log(data);
+        this.teacher = data;
+      },
+      error: (err) => {
+        console.error("Error fetching teacher data:", err);
+      }
+    });
+  }
+
+  getStudent(): void {
+    this.studentService.getStudent().subscribe({
       next: (data: Teacher) => {
         console.log(data);
         this.teacher = data;
@@ -67,18 +85,33 @@ export class ProfileComponent implements OnInit{
 
 
       this.service.updateTeacher(formData , this.teacher!.id).subscribe({
-        next(data : Teacher){
+        next : (data : Teacher)=>{
           console.log(data)
+          this.getTeacher()
+          this.teacher = data
+          this.toast.success("Profile Updated Successfully" , "Success" , 2000)
+          this.teacherForm.reset()
         },
-        error(error){
+        error : (error)=>{
           console.log(error)
+          this.toast.success("Error Updating Profile" , "Danger" , 2000)
         }
       })
 
-
-
     }else {
-      console.log('student')
+      this.studentService.update(formData , this.teacher!.id).subscribe({
+        next : (data : Student) => {
+          console.log(data)
+          this.teacher = data
+          this.toast.success("Profile Updated Successfully" , "Success" , 2000)
+          this.getStudent()
+          this.teacherForm.reset()
+        },
+        error : (error)=>{
+          console.log(error)
+          this.toast.success("Error Updating Profile" , "Danger" , 2000)
+        }
+      })
     }
   }
 

@@ -17,6 +17,8 @@ import {CourseDetailsComponent} from "./components/course-details/course-details
 import { VideosComponent } from './components/videos/videos.component';
 import {RouterOutlet} from "@angular/router";
 import {AppComponent} from "./app.component";
+import { ManageComponent } from './components/manage/manage.component';
+import { AboutComponent } from './components/about/about.component';
 
 @NgModule({
   declarations: [
@@ -29,7 +31,9 @@ import {AppComponent} from "./app.component";
     NavbarComponent,
     CourseComponent,
     CourseDetailsComponent,
-    VideosComponent
+    VideosComponent,
+    ManageComponent,
+    AboutComponent
 
   ],
   imports: [

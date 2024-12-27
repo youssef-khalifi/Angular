@@ -1,6 +1,7 @@
 import {Teacher} from "./Teacher";
 
 export class Course {
+  id : number
   name: string;
   description: string;
   image?: Uint8Array;
@@ -9,7 +10,9 @@ export class Course {
   courType: string;
   teacher : Teacher
 
+
   constructor(
+    id : number,
     name: string,
     description: string,
     image: Uint8Array | undefined,
@@ -18,6 +21,7 @@ export class Course {
     courType: string,
     teacher : Teacher
   ) {
+    this.id = id
     this.name = name;
     this.description = description;
     this.image = image;
@@ -26,4 +30,6 @@ export class Course {
     this.courType = courType;
     this.teacher = teacher
   }
+
+
 }

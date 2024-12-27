@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import {AuthService} from "../../services/auth.service";
 
 @Component({
   selector: 'app-navbar',
@@ -11,5 +12,8 @@ export class NavbarComponent {
 
   toggleSidebar(): void {
     this.isToggled = !this.isToggled;
+  }
+
+  constructor(public authService : AuthService) {
   }
 }

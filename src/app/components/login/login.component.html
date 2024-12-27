@@ -4,13 +4,20 @@
     <input type="checkbox" id="chk" aria-hidden="true">
 
     <div class="signup">
-      <form >
+      <form [formGroup]="registerForm" (ngSubmit)="register()">
         <label for="chk" aria-hidden="true">Sign up</label>
-        <input type="text" name="txt" placeholder="User name" required="">
-        <input type="email" name="email" placeholder="Email" required="">
-        <input type="number" name="broj" placeholder="BrojTelefona" required="">
-        <input type="password" name="pswd" placeholder="Password" required="">
-        <button>Sign up</button>
+        <input type="text" formControlName="fullName" name="fullName" placeholder="Full Name" required="">
+        <input type="email" formControlName="email" name="email" placeholder="Email" required="">
+        <input type="number" formControlName="age" name="age" placeholder="age" required="">
+        <select formControlName="gender" name="gender" required class="form-input">
+          <option value="" disabled selected>Select Gender</option>
+          <option value="Male">Male</option>
+          <option value="Female">Female</option>
+          <option value="Other">Other</option>
+        </select>
+        <input type="password" formControlName="password" name="password" placeholder="password" required="">
+        <input type="password" formControlName="confirmPassword" name="confirmPassword" placeholder="Confirm Password" required="">
+        <button [disabled]="registerForm.invalid">Sign up</button>
       </form>
     </div>
 

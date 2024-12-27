@@ -25,11 +25,42 @@ export class CourService {
     return this.http.get<Course[]>(`${this.urlAPI}/COURSE-SERVICE/Course`, { headers });
   }
 
+  getCoursesByTeacher(id: number | undefined): Observable<Course[]> {
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+
+    return this.http.get<Course[]>(`${this.urlAPI}/COURSE-SERVICE/Course/teacher/${id}`, { headers });
+  }
+
   getCourseByName(name: string | null) : Observable<Course>{
     const headers = new HttpHeaders({
       'Authorization': `Bearer ${this.token}`
     });
 
     return this.http.get<Course>(`${this.urlAPI}/COURSE-SERVICE/Course/name/${name}`, { headers });
+  }
+
+  deleteCourse(id: number) : Observable<void>{
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+
+    return this.http.delete<void>(`${this.urlAPI}/COURSE-SERVICE/Course/${id}`, { headers });
+  }
+
+  createCourse(form : FormData , id: number) : Observable<Course>{
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+
+    return this.http.post<Course>(`${this.urlAPI}/COURSE-SERVICE/Course/${id}`, form, { headers });
+  }
+  updateCourse(form : FormData , id: number) : Observable<Course>{
+    const headers = new HttpHeaders({
+      'Authorization': `Bearer ${this.token}`
+    });
+
+    return this.http.put<Course>(`${this.urlAPI}/COURSE-SERVICE/Course/${id}`, form, { headers });
   }
 }

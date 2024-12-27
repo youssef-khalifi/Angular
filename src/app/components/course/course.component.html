@@ -1,4 +1,43 @@
 <link href="https://maxcdn.bootstrapcdn.com/font-awesome/4.3.0/css/font-awesome.min.css" rel="stylesheet">
+
+<body>
+
+<div class="card search-form">
+  <div class="card-body p-0">
+    <form id="search-form">
+      <div class="row">
+        <div class="col-12">
+          <div class="row no-gutters">
+            <div class="col-lg-3 col-md-3 col-sm-12 p-0">
+              <select class="form-control" id="exampleFormControlSelect1" >
+                <option value="Select">Select</option>
+                <option value="Technology & IT" (click)="searchEmployees('Technology & IT')">Technology & IT</option>
+                <option value="Engineering & Technical Fields" (click)="searchEmployees('Engineering & Technical Fields')">Engineering & Technical Fields</option>
+                <option value="Business & Management" (click)="searchEmployees('Business & Management')" >Business & Management</option>
+                <option value="Design & Creative Arts" (click)="searchEmployees('Design & Creative Arts')">Design & Creative Arts</option>
+                <option value="Natural Sciences" (click)="searchEmployees('Natural Sciences')">Natural Sciences</option>
+                <option value="Media & Communication" (click)="searchEmployees('Media & Communication')">Media & Communication</option>
+              </select>
+            </div>
+            <div class="col-lg-8 col-md-6 col-sm-12 p-0">
+              <input type="search" placeholder="Search..."
+                     (ngModelChange)="searchEmployees(key.value)" #key="ngModel" ngModel
+                     ngModelclass="form-control" name="key" id="searchName">
+            </div>
+            <div class="col-lg-1 col-md-3 col-sm-12 p-0">
+              <button type="submit" class="btn btn-base">
+                <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="feather feather-search"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
+
+<br><br>
+
 <div class="container" >
   <div class="row" >
     <div class="col-xs-12 col-sm-4 col-md-4 col-lg-4" *ngFor="let course of courses">
@@ -28,33 +67,9 @@
               <h3>{{course.name}}</h3>
               <p>{{ course.description }}</p>
             </a>
-            <button type="button" (click)="navigateToDetails(course.name)" class="btn btn-outline-dark">View Details</button>
-          </div>
-        </div>
-      </div>
-    </div>
+            <button type="button" (click)="openModal(course)" class="btn btn-outline-dark">View Details</button>
+            <button type="button" (click)="navigateToDetails(course.name)" class="btn btn-outline-dark">Enroll</button>
 
-    <!-- Button trigger modal -->
-    <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModalCenter">
-      Launch demo modal
-    </button>
-
-    <!-- Modal -->
-    <div class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-      <div class="modal-dialog modal-dialog-centered" role="document">
-        <div class="modal-content">
-          <div class="modal-header">
-            <h5 class="modal-title" id="exampleModalLongTitle">Modal title</h5>
-            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-          </div>
-          <div class="modal-body">
-            ...
-          </div>
-          <div class="modal-footer">
-            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-            <button type="button" class="btn btn-primary">Save changes</button>
           </div>
         </div>
       </div>
@@ -62,3 +77,29 @@
 
   </div>
 </div>
+
+
+
+<!-- Modal -->
+<div #modal class="modal fade" id="exampleModalLong" tabindex="-1" role="dialog" aria-labelledby="exampleModalLongTitle" aria-hidden="true">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">{{course?.name}}</h5>
+      </div>
+      <div class="modal-body">
+        <ul class="list-group">
+          <li class="list-group-item">Course : {{course?.name}}</li>
+          <li class="list-group-item">Teacher : {{course?.teacher?.fullName}}</li>
+          <li class="list-group-item">Category : {{course?.courType}}</li>
+          <li class="list-group-item">Level : {{course?.courseLevel}}</li>
+          <li class="list-group-item">Description : {{course?.description}}</li>
+        </ul>
+      </div>
+      <div class="modal-footer">
+        <button type="button" (click)="closeModal()" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
+</body>

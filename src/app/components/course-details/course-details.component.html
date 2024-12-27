@@ -1,36 +1,74 @@
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.12.1/css/all.min.css" integrity="sha256-mmgLkCYLUQbXn0B1SRqzHar6dCnv9oZFPEC1g1cwlkk=" crossorigin="anonymous" />
-<div class="container">
-  <div class="row">
-    <div class="col-md-5">
-      <div class="project-info-box mt-0">
-        <h5>{{course?.name}}</h5>
-        <p class="mb-0">{{course?.description}}</p>
-      </div><!-- / project-info-box -->
 
-      <div class="project-info-box">
-        <p><b>Teacher:</b> {{course?.teacher!.fullName}}</p>
-        <p><b>Teacher Profession:</b> {{course?.teacher!.jobTitle}}</p>
-        <p><b>University:</b> {{course?.teacher!.university}}</p>
-        <p><b>Course Type:</b> {{course?.courType}}</p>
-        <p><b>Course Level:</b> {{course?.courseLevel}}</p>
-      </div><!-- / project-info-box -->
+<body>
+<header class="header">
+  <a [routerLink]="['/home/course']" class="back-button">←</a>
+  <h1>{{course?.name}}</h1>
+</header>
 
-      <div class="project-info-box mt-0 mb-0">
-        <p class="mb-0">
-          <span class="fw-bold mr-10 va-middle hide-mobile">Enroll:</span>
-          <button type="button"  class="btn btn-primary">PDFs</button>
-          <button type="button"   class="btn btn-primary">Videos</button>
-        </p>
-      </div><!-- / project-info-box -->
-    </div><!-- / column -->
+<div class="main-container">
+  <div class="video-container">
+    <div class="video-container">
+      <video
+        [src]="videoUrl"
+        controls
+        autoplay
+        muted
+        playsinline
+        style="width: 1280px; height: 620px; border: 1px solid #ccc; border-radius: 8px;">
+      </video>
+    </div>
+  </div>
 
-    <div class="col-md-7">
-      <img [src]="'data:image/png;base64,'+course?.image" alt="project-image" class="rounded">
-      <div class="project-info-box">
-        <p><b>Categories:</b> {{course?.courType}}</p>
-        <p><b>Posted :</b> {{course?.createdAt}}</p>
-      </div><!-- / project-info-box -->
-    </div><!-- / column -->
+  <div class="course-content">
+    <h2 class="section-header">{{ course?.name }}</h2>
+    <p>{{videos.length}} Videos</p>
+
+    <ul class="lesson-list" *ngFor="let video of videos">
+      <li class="lesson-item" (click)="playVideo(video.id)">
+        <span>{{video.title}}</span>
+        <span class="time-badge">{{ video.tags }}</span>
+      </li>
+    </ul>
   </div>
 </div>
+
+
+
+<div class="container">
+  <div class="row">
+    <div class="col-md-12">
+      <div class="card card-white mb-5">
+        <div class="card-heading clearfix border-bottom mb-4">
+          <h4 class="card-title">Course Details</h4>
+        </div>
+        <div class="card-body">
+          <ul class="list-unstyled">
+            <li class="position-relative booking">
+              <div class="media">
+                <div class="msg-img">
+                  <img [src]="'data:image/png;base64,'+course?.teacher?.image" alt="">
+                </div>
+                <div class="media-body">
+                  <h5 class="mb-4">{{course?.teacher!.fullName}} <span class="badge badge-primary mx-3">Pending</span><span class="badge badge-danger">Unpaid</span></h5>
+                  <div class="mb-3">
+                    <span class="mr-2 d-block d-sm-inline-block mb-2 mb-sm-0">Profession:</span>
+                    <span class="bg-light-blue">{{course?.teacher!.jobTitle}}</span>
+                  </div>
+                  <div class="mb-3">
+                    <span class="mr-2 d-block d-sm-inline-block mb-2 mb-sm-0">University</span>
+                    <span class="bg-light-blue">{{course?.teacher!.university}}</span>
+                  </div>
+                </div>
+              </div>
+            </li>
+          </ul>
+
+        </div>
+      </div>
+
+
+    </div>
+  </div>
+</div>
+</body>
 

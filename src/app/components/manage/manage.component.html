@@ -1,0 +1,295 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/boxicons/2.1.0/css/boxicons.min.css" integrity="sha512-pVCM5+SN2+qwj36KonHToF2p1oIvoU3bsqxphdOIWMYmgr4ZqD3t5DjKvvetKhXGc/ZG5REYTT6ltKfExEei/Q==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/MaterialDesign-Webfont/5.3.45/css/materialdesignicons.css" integrity="sha256-NAxhqDvtY0l4xn+YVa6WjAcmd94NNfttjNsDmNatFVc=" crossorigin="anonymous" />
+
+<div class="container">
+  <div class="row align-items-center">
+    <div class="col-md-6">
+      <div class="mb-3">
+        <h5 class="card-title">Courses <span class="text-muted fw-normal ms-2"></span></h5>
+      </div>
+    </div>
+    <div class="col-md-6">
+      <div class="d-flex flex-wrap align-items-center justify-content-end gap-2 mb-3">
+        <div>
+
+        </div>
+        <div>
+          <a (click)="openModalForm()" class="btn btn-primary"><i class="bx bx-plus me-1"></i> Add New</a>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-12">
+      <div class="">
+        <div class="table-responsive">
+          <table class="table project-list-table table-nowrap align-middle table-borderless">
+            <thead>
+            <tr>
+              <th scope="col">Course</th>
+              <th scope="col">Category</th>
+              <th scope="col">Level</th>
+              <th scope="col">Date</th>
+              <th scope="col" style="width: 200px;">Action</th>
+            </tr>
+            </thead>
+            <tbody *ngFor="let cour of courses">
+
+            <tr>
+              <td><img [src]="'data:image/png;base64,'+cour?.image" alt="" class="avatar-sm rounded-circle me-2" /><a class="text-body">{{cour.name}}</a></td>
+              <td><span class="badge badge-soft-primary mb-0">{{cour?.courType}}</span></td>
+              <td>{{cour!.courseLevel}}</td>
+              <td>{{ cour.createdAt }}</td>
+              <td>
+                <ul class="list-inline mb-0">
+                  <li class="list-inline-item">
+                    <a  data-bs-toggle="tooltip" data-bs-placement="top" (click)="openModalFormUpdate(cour)" title="Edit" class="px-2 text-primary"><i class="bx bx-pencil font-size-18"></i></a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a  data-bs-toggle="tooltip" data-bs-placement="top" (click)="openModal(cour)" title="Delete" class="px-2 text-danger"><i class="bx bx-trash-alt font-size-18"></i></a>
+                  </li>
+                  <li class="list-inline-item">
+                    <a  data-bs-toggle="tooltip" data-bs-placement="top" [routerLink]="['/home/resources', cour.name]" title="Settings" class="px-2 text-danger"><i class="bx bxs-cog font-size-18"></i></a>
+                  </li>
+                </ul>
+              </td>
+            </tr>
+
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div class="row g-0 align-items-center pb-4">
+
+  </div>
+</div>
+
+
+
+
+
+
+<!-- Modal for delete -->
+<div #modal class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLabel">Delete Course {{course?.name}}</h5>
+      </div>
+      <div class="modal-body">
+       Are you sure ?
+      </div>
+      <div class="modal-footer">
+        <button type="button" (click)="closeModal()" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" (click)="deleteCour(course)" class="btn btn-primary">Save</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div #modalForm class="modal fade" id="exampleModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" >
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="exampleModalLongTitle">Create Course</h5>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="courseForm" (ngSubmit)="createCourse()">
+          <!-- Course Name -->
+          <div class="form-group">
+            <label for="exampleInputEmail1">Name</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="name"
+              id="exampleInputEmail1"
+              aria-describedby="emailHelp"
+              placeholder="Enter Name"
+            />
+          </div>
+
+          <br />
+
+          <!-- Course Level -->
+          <div class="form-group">
+            <label for="courseLevel" class="form-label">Course Level</label>
+            <select
+              class="selectpicker form-control"
+              id="courseLevel"
+              formControlName="courseLevel"
+              data-live-search="true"
+            >
+              <option value="BEGINNER">BEGINNER</option>
+              <option value="INTERMEDIATE">INTERMEDIATE</option>
+              <option value="ADVANCED">ADVANCED</option>
+              <option value="EXPERT">EXPERT</option>
+            </select>
+          </div>
+
+          <br />
+
+          <!-- Course Type -->
+          <div class="form-group">
+            <label for="courseType" class="form-label">Course Type</label>
+            <select
+              class="selectpicker form-control"
+              id="courseType"
+              formControlName="courseType"
+              data-live-search="true"
+            >
+              <option value="Technology & IT">Technology & IT</option>
+              <option value="Engineering & Technical Fields">Engineering & Technical Fields</option>
+              <option value="Business & Management">Business & Management</option>
+              <option value="Design & Creative Arts">Design & Creative Arts</option>
+              <option value="Natural Sciences">Natural Sciences</option>
+              <option value="Media & Communication">Media & Communication</option>
+            </select>
+          </div>
+
+          <br />
+
+          <!-- Description -->
+          <div class="form-group">
+            <label for="description" class="form-label">Description</label>
+            <textarea
+              class="form-control"
+              id="description"
+              formControlName="description"
+              rows="4"
+              placeholder="Enter your text here"
+            ></textarea>
+          </div>
+
+          <br />
+
+          <!-- Upload Thumbnail -->
+          <div class="form-group">
+            <label for="image" class="form-label">Upload Thumbnail</label>
+            <input
+              class="form-control"
+              type="file"
+              id="image"
+              (change)="onFileChange($event)"
+            />
+          </div>
+
+          <br />
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" (click)="closeModalForm()" class="btn btn-secondary" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Save </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div #modalFormUpdate class="modal fade" id="ModalCenter" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" >
+  <div class="modal-dialog modal-dialog-centered" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h5 class="modal-title" id="ModalLongTitle">Update Course</h5>
+      </div>
+      <div class="modal-body">
+        <form [formGroup]="courseFormUpdate" (ngSubmit)="updateCourse()">
+          <!-- Course Name -->
+          <div class="form-group">
+            <label>Name</label>
+            <input
+              type="text"
+              class="form-control"
+              formControlName="name"
+              name="name"
+              placeholder="Enter Name"
+              [ngModel]="courseUpdate?.name"
+            />
+          </div>
+
+          <br />
+
+          <!-- Course Level -->
+          <div class="form-group">
+            <label for="courseLevel" class="form-label">Course Level</label>
+            <select
+              class="selectpicker form-control"
+              formControlName="courseLevel"
+              name="courseLevel"
+              data-live-search="true"
+              [ngModel]="courseUpdate?.courseLevel"
+            >
+              <option value="BEGINNER" [selected]="courseUpdate?.courseLevel === 'BEGINNER'">BEGINNER</option>
+              <option value="INTERMEDIATE" [selected]="courseUpdate?.courseLevel === 'INTERMEDIATE'">INTERMEDIATE</option>
+              <option value="ADVANCED" [selected]="courseUpdate?.courseLevel === 'ADVANCED'">ADVANCED</option>
+              <option value="EXPERT" [selected]="courseUpdate?.courseLevel === 'EXPERT'">EXPERT</option>
+            </select>
+          </div>
+
+          <br />
+
+          <!-- Course Type -->
+          <div class="form-group">
+            <label for="courseType" class="form-label">Course Type</label>
+            <select
+              class="selectpicker form-control"
+              formControlName="courseType"
+              name="courseType"
+              data-live-search="true"
+              [ngModel]="courseUpdate?.courType"
+            >
+              <option value="Technology & IT" [selected]="courseUpdate?.courType === 'Technology & IT'">Technology & IT</option>
+              <option value="Engineering & Technical Fields" [selected]="courseUpdate?.courType === 'Engineering & Technical Fields'">Engineering & Technical Fields</option>
+              <option value="Business & Management" [selected]="courseUpdate?.courType === 'Business & Management'">Business & Management</option>
+              <option value="Design & Creative Arts" [selected]="courseUpdate?.courType === 'Design & Creative Arts'">Design & Creative Arts</option>
+              <option value="Natural Sciences" [selected]="courseUpdate?.courType === 'Natural Sciences'">Natural Sciences</option>
+              <option value="Media & Communication" [selected]="courseUpdate?.courType === 'Media & Communication'">Media & Communication</option>
+            </select>
+          </div>
+
+          <br />
+
+          <!-- Description -->
+          <div class="form-group">
+            <label for="description" class="form-label">Description</label>
+            <textarea
+              class="form-control"
+              formControlName="description"
+              rows="4"
+              placeholder="Enter your text here"
+              name="description"
+              [ngModel]="courseUpdate?.description"
+            ></textarea>
+          </div>
+
+          <br />
+
+          <!-- Upload Thumbnail -->
+          <div class="form-group">
+            <label for="image" class="form-label">Upload Thumbnail</label>
+            <input
+              class="form-control"
+              type="file"
+              (change)="onFileChange($event)"
+            />
+          </div>
+
+          <br />
+
+          <!-- Submit Button -->
+          <button type="submit" class="btn btn-primary">Submit</button>
+        </form>
+
+      </div>
+      <div class="modal-footer">
+        <button type="button" (click)="closeModalFormUpdate()" class="btn btn-secondary" data-dismiss="modal">Close</button>
+      </div>
+    </div>
+  </div>
+</div>
